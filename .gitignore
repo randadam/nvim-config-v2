@@ -1,0 +1,12 @@
+# Plugin source code — vim.pack clones these, don't commit them
+pack/
+
+# Undo history files
+/undo/
+
+# Swap/backup files (you have these disabled but just in case)
+*.swp
+*.swo
+
+# dadbod saves queries here — contains connection info, skip it
+/dadbod/
