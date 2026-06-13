@@ -22,25 +22,30 @@ local function on_attach(_, bufnr)
   end
 
   -- Navigation
-  map("n", "gd",  vim.lsp.buf.definition,      "Go to Definition")
-  map("n", "gD",  vim.lsp.buf.declaration,     "Go to Declaration")
-  map("n", "gi",  vim.lsp.buf.implementation,  "Go to Implementation")
-  map("n", "gr",  vim.lsp.buf.references,      "Go to References")
-  map("n", "gt",  vim.lsp.buf.type_definition, "Go to Type Definition")
+  map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
+  map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
+  map("n", "gi", vim.lsp.buf.implementation, "Go to Implementation")
+  map("n", "gr", vim.lsp.buf.references, "Go to References")
+  map("n", "gt", vim.lsp.buf.type_definition, "Go to Type Definition")
 
   -- Docs & Signature
-  map("n", "K",     vim.lsp.buf.hover,          "Hover Docs")
+  map("n", "K", vim.lsp.buf.hover, "Hover Docs")
   map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
 
   -- Edits
-  map("n", "<leader>rn", vim.lsp.buf.rename,      "Rename Symbol")
+  map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
   map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Actions")
   map("v", "<leader>ca", vim.lsp.buf.code_action, "Code Actions (visual)")
 
   -- Diagnostics
-  map("n", "[d", vim.diagnostic.goto_prev,       "Previous Diagnostic")
-  map("n", "]d", vim.diagnostic.goto_next,       "Next Diagnostic")
+  map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, "Previous Diagnostic")
+  map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, "Next Diagnostic")
   map("n", "<leader>d", vim.diagnostic.open_float, "Show Diagnostic Float")
+
+  -- Inlay Hints
+  map("n", "<leader>ci", function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }))
+  end, "Toggle inlay hints")
 
   -- Trouble (quickfix-style diagnostic list)
   map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", "Toggle Trouble")
@@ -49,13 +54,13 @@ end
 
 -- ── Diagnostic display config ──────────────────────────────────────────────
 vim.diagnostic.config({
-  virtual_text  = true,
-  signs         = true,
-  update_in_insert = false,   -- don't show diagnostics while typing (noisy)
-  severity_sort = true,
-  float = {
+  virtual_text     = true,
+  signs            = true,
+  update_in_insert = false, -- don't show diagnostics while typing (noisy)
+  severity_sort    = true,
+  float            = {
     border = "rounded",
-    source = "always",        -- show which server reported the diagnostic
+    source = true,
   },
 })
 
@@ -72,15 +77,15 @@ vim.lsp.config("ts_ls", {
   settings = {
     typescript = {
       inlayHints = {
-        includeInlayParameterNameHints        = "all",
+        includeInlayParameterNameHints                        = "all",
         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-        includeInlayFunctionParameterTypeHints = true,
-        includeInlayVariableTypeHints          = true,
-        includeInlayPropertyDeclarationTypeHints = true,
-        includeInlayFunctionLikeReturnTypeHints  = true,
+        includeInlayFunctionParameterTypeHints                = true,
+        includeInlayVariableTypeHints                         = true,
+        includeInlayPropertyDeclarationTypeHints              = true,
+        includeInlayFunctionLikeReturnTypeHints               = true,
       },
       preferences = {
-        importModuleSpecifier = "non-relative",  -- prefer absolute paths
+        importModuleSpecifier = "non-relative", -- prefer absolute paths
       },
     },
     javascript = {
@@ -102,22 +107,22 @@ vim.lsp.config("gopls", {
   root_markers = { "go.work", "go.mod", ".git" },
   settings = {
     gopls = {
-      analyses = {
-        unusedparams = true,
-        shadow       = true,
+      analyses           = {
+        unusedparams   = true,
+        shadow         = true,
         fieldalignment = true,
       },
-      staticcheck    = true,         -- runs staticcheck analyses
-      gofumpt        = true,         -- stricter gofmt (pairs with gofumpt formatter)
-      usePlaceholders = true,        -- adds placeholders to function completions
-      completeUnimported = true,     -- complete symbols from unimported packages
-      hints = {
-        assignVariableTypes     = true,
-        compositeLiteralFields  = true,
-        constantValues          = true,
-        functionTypeParameters  = true,
-        parameterNames          = true,
-        rangeVariableTypes      = true,
+      staticcheck        = true, -- runs staticcheck analyses
+      gofumpt            = true, -- stricter gofmt (pairs with gofumpt formatter)
+      usePlaceholders    = true, -- adds placeholders to function completions
+      completeUnimported = true, -- complete symbols from unimported packages
+      hints              = {
+        assignVariableTypes    = true,
+        compositeLiteralFields = true,
+        constantValues         = true,
+        functionTypeParameters = true,
+        parameterNames         = true,
+        rangeVariableTypes     = true,
       },
     },
   },
@@ -135,13 +140,13 @@ vim.lsp.config("rust_analyzer", {
   settings = {
     ["rust-analyzer"] = {
       checkOnSave = {
-        command = "clippy",          -- run clippy instead of check — catches more issues
+        command = "clippy", -- run clippy instead of check — catches more issues
       },
       cargo = {
-        allFeatures = true,          -- enable all cargo features for analysis
+        allFeatures = true, -- enable all cargo features for analysis
       },
       procMacro = {
-        enable = true,               -- enable proc macro expansion (needed for many crates)
+        enable = true, -- enable proc macro expansion (needed for many crates)
       },
       inlayHints = {
         bindingModeHints       = { enable = true },
@@ -189,15 +194,15 @@ vim.lsp.config("pyright", {
   settings = {
     python = {
       analysis = {
-        typeCheckingMode      = "standard",  -- "off" | "basic" | "standard" | "strict"
-        autoSearchPaths       = true,
+        typeCheckingMode       = "standard", -- "off" | "basic" | "standard" | "strict"
+        autoSearchPaths        = true,
         useLibraryCodeForTypes = true,
-        diagnosticMode        = "workspace", -- analyze whole workspace, not just open files
-        inlayHints = {
-          variableTypes         = true,
-          functionReturnTypes   = true,
-          callArgumentNames     = true,
-          pytestParameters      = true,
+        diagnosticMode         = "workspace", -- analyze whole workspace, not just open files
+        inlayHints             = {
+          variableTypes       = true,
+          functionReturnTypes = true,
+          callArgumentNames   = true,
+          pytestParameters    = true,
         },
       },
     },
@@ -214,13 +219,13 @@ vim.lsp.config("lua_ls", {
   root_markers = { ".luarc.json", ".luarc.jsonc", ".git" },
   settings = {
     Lua = {
-      runtime = { version = "LuaJIT" },     -- Neovim uses LuaJIT
+      runtime = { version = "LuaJIT" }, -- Neovim uses LuaJIT
       workspace = {
         checkThirdParty = false,
-        library = vim.api.nvim_get_runtime_file("", true),  -- expose nvim runtime
+        library = vim.api.nvim_get_runtime_file("", true), -- expose nvim runtime
       },
       diagnostics = {
-        globals = { "vim" },                -- suppress "undefined global vim" warnings
+        globals = { "vim" }, -- suppress "undefined global vim" warnings
       },
       telemetry = { enable = false },
     },

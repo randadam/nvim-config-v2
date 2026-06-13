@@ -40,8 +40,9 @@ map("n", "-", "<cmd>Oil<cr>", { desc = "Open file explorer (vim-vinegar style)" 
 -- ── Git (gitsigns) ─────────────────────────────────────────────────────────
 -- Hunk navigation and staging — fast inline git workflow
 local gs = require("gitsigns")
-map("n", "]h", gs.next_hunk, { desc = "Next hunk" })
-map("n", "[h", gs.prev_hunk, { desc = "Previous hunk" })
+map("n", "<leader>gg", "<cmd>Git<cr>", { desc = "Open fugitive" })
+map("n", "]h", function() gs.nav_hunk("next") end, { desc = "Next hunk" })
+map("n", "[h", function() gs.nav_hunk("prev") end, { desc = "Previous hunk" })
 map("n", "<leader>hs", gs.stage_hunk, { desc = "Stage hunk" })
 map("n", "<leader>hr", gs.reset_hunk, { desc = "Reset hunk" })
 map("n", "<leader>hp", gs.preview_hunk, { desc = "Preview hunk" })

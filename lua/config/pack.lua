@@ -50,6 +50,9 @@ require("gitsigns").setup({
   current_line_blame_opts = { delay = 500 },
 })
 
+-- fugitive
+vim.pack.add({ gh('tpope/vim-fugitive') })
+
 -- ── Statusline ─────────────────────────────────────────────────────────────
 -- lualine is the standard. The default statusline in 0.12 is improved,
 -- but lualine gives you LSP progress, diagnostics, and branch cleanly.
