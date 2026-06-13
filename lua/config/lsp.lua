@@ -38,8 +38,12 @@ local function on_attach(_, bufnr)
   map("v", "<leader>ca", vim.lsp.buf.code_action, "Code Actions (visual)")
 
   -- Diagnostics
-  map("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, "Previous Diagnostic")
-  map("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, "Next Diagnostic")
+  map("n", "[d", function()
+    vim.diagnostic.jump({ count = -1 })
+  end, "Previous Diagnostic")
+  map("n", "]d", function()
+    vim.diagnostic.jump({ count = 1 })
+  end, "Next Diagnostic")
   map("n", "<leader>d", vim.diagnostic.open_float, "Show Diagnostic Float")
 
   -- Inlay Hints
@@ -54,11 +58,11 @@ end
 
 -- ── Diagnostic display config ──────────────────────────────────────────────
 vim.diagnostic.config({
-  virtual_text     = true,
-  signs            = true,
+  virtual_text = true,
+  signs = true,
   update_in_insert = false, -- don't show diagnostics while typing (noisy)
-  severity_sort    = true,
-  float            = {
+  severity_sort = true,
+  float = {
     border = "rounded",
     source = true,
   },
@@ -70,19 +74,21 @@ vim.lsp.config("ts_ls", {
   cmd = { "typescript-language-server", "--stdio" },
   on_attach = on_attach,
   filetypes = {
-    "javascript", "javascriptreact",
-    "typescript", "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
   },
   root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
   settings = {
     typescript = {
       inlayHints = {
-        includeInlayParameterNameHints                        = "all",
+        includeInlayParameterNameHints = "all",
         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-        includeInlayFunctionParameterTypeHints                = true,
-        includeInlayVariableTypeHints                         = true,
-        includeInlayPropertyDeclarationTypeHints              = true,
-        includeInlayFunctionLikeReturnTypeHints               = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
       },
       preferences = {
         importModuleSpecifier = "non-relative", -- prefer absolute paths
@@ -107,22 +113,22 @@ vim.lsp.config("gopls", {
   root_markers = { "go.work", "go.mod", ".git" },
   settings = {
     gopls = {
-      analyses           = {
-        unusedparams   = true,
-        shadow         = true,
+      analyses = {
+        unusedparams = true,
+        shadow = true,
         fieldalignment = true,
       },
-      staticcheck        = true, -- runs staticcheck analyses
-      gofumpt            = true, -- stricter gofmt (pairs with gofumpt formatter)
-      usePlaceholders    = true, -- adds placeholders to function completions
+      staticcheck = true, -- runs staticcheck analyses
+      gofumpt = true, -- stricter gofmt (pairs with gofumpt formatter)
+      usePlaceholders = true, -- adds placeholders to function completions
       completeUnimported = true, -- complete symbols from unimported packages
-      hints              = {
-        assignVariableTypes    = true,
+      hints = {
+        assignVariableTypes = true,
         compositeLiteralFields = true,
-        constantValues         = true,
+        constantValues = true,
         functionTypeParameters = true,
-        parameterNames         = true,
-        rangeVariableTypes     = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
       },
     },
   },
@@ -149,13 +155,13 @@ vim.lsp.config("rust_analyzer", {
         enable = true, -- enable proc macro expansion (needed for many crates)
       },
       inlayHints = {
-        bindingModeHints       = { enable = true },
-        chainingHints          = { enable = true },
-        closingBraceHints      = { enable = true, minLines = 25 },
+        bindingModeHints = { enable = true },
+        chainingHints = { enable = true },
+        closingBraceHints = { enable = true, minLines = 25 },
         closureReturnTypeHints = { enable = "with_block" },
-        lifetimeElisionHints   = { enable = "skip_trivial" },
-        parameterHints         = { enable = true },
-        typeHints              = { enable = true },
+        lifetimeElisionHints = { enable = "skip_trivial" },
+        parameterHints = { enable = true },
+        typeHints = { enable = true },
       },
     },
   },
@@ -187,22 +193,26 @@ vim.lsp.config("pyright", {
   on_attach = on_attach,
   filetypes = { "python" },
   root_markers = {
-    "pyproject.toml", "setup.py", "setup.cfg",
-    "requirements.txt", ".python-version",
-    "pyrightconfig.json", ".git",
+    "pyproject.toml",
+    "setup.py",
+    "setup.cfg",
+    "requirements.txt",
+    ".python-version",
+    "pyrightconfig.json",
+    ".git",
   },
   settings = {
     python = {
       analysis = {
-        typeCheckingMode       = "standard", -- "off" | "basic" | "standard" | "strict"
-        autoSearchPaths        = true,
+        typeCheckingMode = "standard", -- "off" | "basic" | "standard" | "strict"
+        autoSearchPaths = true,
         useLibraryCodeForTypes = true,
-        diagnosticMode         = "workspace", -- analyze whole workspace, not just open files
-        inlayHints             = {
-          variableTypes       = true,
+        diagnosticMode = "workspace", -- analyze whole workspace, not just open files
+        inlayHints = {
+          variableTypes = true,
           functionReturnTypes = true,
-          callArgumentNames   = true,
-          pytestParameters    = true,
+          callArgumentNames = true,
+          pytestParameters = true,
         },
       },
     },

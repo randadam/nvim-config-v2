@@ -6,7 +6,7 @@
 
 local add = vim.pack.add
 local gh = function(repo)
-  return 'https://github.com/' .. repo
+  return "https://github.com/" .. repo
 end
 
 -- ── Colorscheme ────────────────────────────────────────────────────────────
@@ -19,16 +19,27 @@ vim.cmd.colorscheme("kanagawa-wave")
 add({ gh("ibhagwan/fzf-lua") })
 require("fzf-lua").setup({
   winopts = {
-    height  = 0.85,
-    width   = 0.80,
+    height = 0.85,
+    width = 0.80,
     preview = { layout = "vertical", vertical = "down:45%" },
+  },
+  keymap = {
+    fzf = {
+      ["ctrl-q"] = "select-all+accept",
+    },
+  },
+  actions = {
+    files = {
+      ["default"] = require("fzf-lua.actions").file_edit,
+      ["ctrl-q"] = require("fzf-lua.actions").file_sel_to_qf,
+    },
   },
 })
 
 -- ── File Explorer ──────────────────────────────────────────────────────────
 -- oil.nvim lets you edit your filesystem like a buffer (mv, rm, mkdir, etc.)
 -- Much more powerful than a tree view once you're used to it.
-vim.pack.add({ gh('nvim-tree/nvim-web-devicons') })
+vim.pack.add({ gh("nvim-tree/nvim-web-devicons") })
 add({ gh("stevearc/oil.nvim") })
 require("oil").setup({
   default_file_explorer = true,
@@ -40,10 +51,10 @@ require("oil").setup({
 add({ gh("lewis6991/gitsigns.nvim") })
 require("gitsigns").setup({
   signs = {
-    add          = { text = "▎" },
-    change       = { text = "▎" },
-    delete       = { text = "" },
-    topdelete    = { text = "" },
+    add = { text = "▎" },
+    change = { text = "▎" },
+    delete = { text = "" },
+    topdelete = { text = "" },
     changedelete = { text = "▎" },
   },
   current_line_blame = true,
@@ -51,7 +62,7 @@ require("gitsigns").setup({
 })
 
 -- fugitive
-vim.pack.add({ gh('tpope/vim-fugitive') })
+vim.pack.add({ gh("tpope/vim-fugitive") })
 
 -- ── Statusline ─────────────────────────────────────────────────────────────
 -- lualine is the standard. The default statusline in 0.12 is improved,
@@ -60,12 +71,12 @@ add({ gh("nvim-lualine/lualine.nvim") })
 require("lualine").setup({
   options = {
     component_separators = "|",
-    section_separators   = "",
+    section_separators = "",
   },
   sections = {
     lualine_a = { "mode" },
     lualine_b = { "branch", "diff", "diagnostics" },
-    lualine_c = { { "filename", path = 1 } },   -- relative path
+    lualine_c = { { "filename", path = 1 } }, -- relative path
     lualine_x = { "lsp_progress", "filetype" }, -- lsp_progress requires lualine-lsp-progress
     lualine_y = { "progress" },
     lualine_z = { "location" },
@@ -110,18 +121,18 @@ require("trouble").setup({})
 add({ gh("stevearc/conform.nvim") })
 require("conform").setup({
   formatters_by_ft = {
-    javascript      = { "prettierd" },
-    typescript      = { "prettierd" },
+    javascript = { "prettierd" },
+    typescript = { "prettierd" },
     typescriptreact = { "prettierd" },
     javascriptreact = { "prettierd" },
-    json            = { "prettierd" },
-    html            = { "prettierd" },
-    css             = { "prettierd" },
-    go              = { "gofmt", "goimports" }, -- goimports also manages imports
-    rust            = { "rustfmt" },
-    python          = { "ruff_format" },        -- ruff is fast, replaces black+isort
-    sql             = { "sqlfmt" },             -- pip install shandy-sqlfmt
-    lua             = { "stylua" },
+    json = { "prettierd" },
+    html = { "prettierd" },
+    css = { "prettierd" },
+    go = { "gofmt", "goimports" }, -- goimports also manages imports
+    rust = { "rustfmt" },
+    python = { "ruff_format" }, -- ruff is fast, replaces black+isort
+    sql = { "sqlfmt" }, -- pip install shandy-sqlfmt
+    lua = { "stylua" },
   },
   format_on_save = {
     timeout_ms = 500,
@@ -137,12 +148,13 @@ add({ gh("williamboman/mason.nvim") })
 require("mason").setup({
   ui = { border = "rounded" },
 })
-local mason_registry = require('mason-registry')
+local mason_registry = require("mason-registry")
 local ensure_installed = {
-  'typescript-language-server',
-  'lua-language-server',
-  'pyright',
-  'sqls',
+  "typescript-language-server",
+  "lua-language-server",
+  "pyright",
+  "sqls",
+  "stylua",
 }
 for _, pkg in ipairs(ensure_installed) do
   if not mason_registry.is_installed(pkg) then
@@ -163,9 +175,9 @@ end
 add({ gh("tpope/vim-dadbod") })
 
 add({ gh("kristijanhusak/vim-dadbod-ui") })
-vim.g.db_ui_use_nerd_fonts             = 1
-vim.g.db_ui_save_location              = vim.fn.stdpath("data") .. "/dadbod" -- saves queries here
-vim.g.db_ui_auto_execute_table_helpers = 1                                   -- auto-run table info queries in the UI
+vim.g.db_ui_use_nerd_fonts = 1
+vim.g.db_ui_save_location = vim.fn.stdpath("data") .. "/dadbod" -- saves queries here
+vim.g.db_ui_auto_execute_table_helpers = 1 -- auto-run table info queries in the UI
 
 add({ gh("kristijanhusak/vim-dadbod-completion") })
 -- Wire dadbod completion into the native completion for sql filetypes.
@@ -181,13 +193,32 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- ── Syntax Highlighting ──────────────────────────────────────────────────────
 vim.pack.add({
-  { src = gh('nvim-treesitter/nvim-treesitter'), version = 'main' },
+  { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
 })
 
-if pcall(require, 'nvim-treesitter') then
-  require('nvim-treesitter').install({
-    'typescript', 'javascript', 'tsx',
-    'go', 'rust', 'python', 'sql',
-    'bash', 'json', 'yaml',
+if pcall(require, "nvim-treesitter") then
+  require("nvim-treesitter").install({
+    "typescript",
+    "javascript",
+    "tsx",
+    "go",
+    "rust",
+    "python",
+    "sql",
+    "bash",
+    "json",
+    "yaml",
   })
 end
+
+-- ── JSX/HTML Auto-tagging ──────────────────────────────────────────────────────
+vim.pack.add({
+  { src = gh("windwp/nvim-ts-autotag") },
+})
+require("nvim-ts-autotag").setup({
+  opts = {
+    enable_close = true,
+    enable_rename = true,
+    enable_close_on_slash = false,
+  },
+})

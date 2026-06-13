@@ -7,7 +7,7 @@ local autocmd = vim.api.nvim_create_autocmd
 -- Briefly flashes the yanked region. Small QoL that confirms what you copied.
 augroup("YankHighlight", { clear = true })
 autocmd("TextYankPost", {
-  group    = "YankHighlight",
+  group = "YankHighlight",
   callback = function()
     vim.highlight.on_yank({ higroup = "IncSearch", timeout = 150 })
   end,
@@ -16,8 +16,8 @@ autocmd("TextYankPost", {
 -- ── Trim trailing whitespace on save ──────────────────────────────────────
 augroup("TrimWhitespace", { clear = true })
 autocmd("BufWritePre", {
-  group    = "TrimWhitespace",
-  pattern  = "*",
+  group = "TrimWhitespace",
+  pattern = "*",
   callback = function()
     local view = vim.fn.winsaveview()
     vim.cmd([[%s/\s\+$//e]])
@@ -43,12 +43,12 @@ autocmd("BufReadPost", {
 -- Works in conjunction with the goimports formatter in conform.nvim.
 augroup("GoImports", { clear = true })
 autocmd("BufWritePre", {
-  group    = "GoImports",
-  pattern  = "*.go",
+  group = "GoImports",
+  pattern = "*.go",
   callback = function()
     vim.lsp.buf.code_action({
       context = { only = { "source.organizeImports" } },
-      apply   = true,
+      apply = true,
     })
   end,
 })
@@ -95,8 +95,8 @@ autocmd("BufWritePre", {
 -- Quickfix, help, man pages, etc. are easier to close without :q
 augroup("QuickClose", { clear = true })
 autocmd("FileType", {
-  group    = "QuickClose",
-  pattern  = { "qf", "help", "man", "lspinfo", "trouble" },
+  group = "QuickClose",
+  pattern = { "qf", "help", "man", "lspinfo", "trouble", "fugitive" },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
