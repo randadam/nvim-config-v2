@@ -23,15 +23,10 @@ require("fzf-lua").setup({
     width = 0.80,
     preview = { layout = "vertical", vertical = "down:45%" },
   },
-  keymap = {
-    fzf = {
-      ["ctrl-q"] = "select-all+accept",
-    },
-  },
   actions = {
     files = {
       ["default"] = require("fzf-lua.actions").file_edit,
-      ["ctrl-q"] = require("fzf-lua.actions").file_sel_to_qf,
+      ["ctrl-q"] = { fn = require("fzf-lua.actions").file_sel_to_qf, prefix = "select-all" },
     },
   },
 })
