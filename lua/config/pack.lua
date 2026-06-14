@@ -36,7 +36,9 @@ vim.pack.add({
   gh("saghen/blink.lib"),
   gh("saghen/blink.cmp"),
 })
-require("blink.cmp").setup({
+local cmp = require("blink.cmp")
+cmp.build():pwait()
+cmp.setup({
   keymap = { preset = "default" },
   completion = {
     accept = { auto_brackets = { enabled = true } },

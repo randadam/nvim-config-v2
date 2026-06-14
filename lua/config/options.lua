@@ -42,6 +42,7 @@ opt.timeoutlen = 300 -- faster which-key popup
 opt.mouse = "a" -- mouse support (useful for resizing splits)
 opt.list = true -- show invisible characters
 opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.g.loaded_matchit = 1 -- disable default matchit so '%' works in oil buffers
 
 -- ── Path ───────────────────────────────────────────────────────────────────
 vim.env.PATH = vim.env.PATH .. ":" .. vim.env.HOME .. "/.local/share/go/bin"
