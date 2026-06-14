@@ -31,6 +31,18 @@ require("fzf-lua").setup({
   },
 })
 
+-- ── Auto-Complete ───────────────────────────────────────────────────────────
+vim.pack.add({
+  gh("saghen/blink.lib"),
+  gh("saghen/blink.cmp"),
+})
+require("blink.cmp").setup({
+  keymap = { preset = "default" },
+  completion = {
+    accept = { auto_brackets = { enabled = true } },
+  },
+})
+
 -- ── File Explorer ──────────────────────────────────────────────────────────
 -- oil.nvim lets you edit your filesystem like a buffer (mv, rm, mkdir, etc.)
 -- Much more powerful than a tree view once you're used to it.

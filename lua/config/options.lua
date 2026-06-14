@@ -34,12 +34,6 @@ opt.backup = false
 opt.undofile = true -- persistent undo across sessions — genuinely useful
 opt.undodir = vim.fn.stdpath("data") .. "/undo"
 
--- ── Completion (native 0.12 autocomplete) ──────────────────────────────────
--- 0.12 introduced the 'autocomplete' option for native insert-mode completion.
--- This gives you a basic popup without any completion plugin.
-opt.autocomplete = true -- enable native insert-mode completion
-opt.completeopt = "menu,menuone,noinsert,popup"
-
 -- ── Misc ───────────────────────────────────────────────────────────────────
 opt.wrap = false -- no line wrapping
 opt.clipboard = "unnamedplus" -- sync with system clipboard
