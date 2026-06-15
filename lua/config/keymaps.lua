@@ -35,6 +35,11 @@ end, { desc = "Resume last search" })
 map("n", "<leader>fs", fzf.lsp_document_symbols, { desc = "Document symbols" })
 map("n", "<leader>fw", fzf.lsp_workspace_symbols, { desc = "Workspace symbols" })
 map("n", "<leader>/", fzf.grep_curbuf, { desc = "Grep current buffer" })
+map("n", "<leader>fd", function()
+  fzf.live_grep({
+    cwd = vim.fn.input("Directory: ", vim.fn.getcwd() .. "/", "dir"),
+  })
+end, { desc = "Grep in directory" })
 
 -- ── File explorer (oil.nvim) ───────────────────────────────────────────────
 map("n", "-", "<cmd>Oil<cr>", { desc = "Open file explorer (vim-vinegar style)" })
