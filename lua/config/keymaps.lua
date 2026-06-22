@@ -93,7 +93,6 @@ map("n", "<leader>rc", "<cmd>source $MYVIMRC<cr>", { desc = "Reload config" })
 
 -- Oil create file shortcut
 map("n", "%", function()
-  print("IT'S HAPPENING!!!")
   local bufname = vim.api.nvim_buf_get_name(0)
   if bufname:match("^oil://") then
     local dir = require("oil").get_current_dir()

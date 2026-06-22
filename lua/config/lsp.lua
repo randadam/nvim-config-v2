@@ -30,7 +30,7 @@ local function on_attach(_, bufnr)
 
   -- Docs & Signature
   map("n", "K", vim.lsp.buf.hover, "Hover Docs")
-  map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+  --map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
 
   -- Edits
   map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
@@ -242,6 +242,23 @@ vim.lsp.config("lua_ls", {
   },
 })
 
+-- ── JSON ────────────────────────────────────────────────────────────────────
+vim.lsp.config("jsonls", {
+  cmd = { "vscode-json-languageserver", "--split-cmd" },
+  on_attach = function(client, bufnr)
+    client.server_capabilities.documentFormattingProvider = false
+    on_attach(client, bufnr)
+  end,
+  filetypes = { "json", "jsonc" },
+  root_markers = { ".git" },
+  settings = {
+    json = {
+      --schemas = require("schemastore").json.schemas(),
+      validate = { enable = true },
+    },
+  },
+})
+
 -- ── Enable all configured servers ──────────────────────────────────────────
 -- This is the activation step. vim.lsp.config defines; vim.lsp.enable starts.
 vim.lsp.enable({
@@ -251,4 +268,5 @@ vim.lsp.enable({
   "lua_ls",
   "pyright",
   "sqls",
+  "jsonls",
 })

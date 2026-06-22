@@ -164,6 +164,7 @@ local ensure_installed = {
   "pyright",
   "sqls",
   "stylua",
+  "json-lsp",
 }
 for _, pkg in ipairs(ensure_installed) do
   if not mason_registry.is_installed(pkg) then
