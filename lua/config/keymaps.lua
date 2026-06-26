@@ -96,6 +96,26 @@ vim.keymap.set({ "n", "v", "x" }, "<leader>sr", function()
   })
 end, { desc = "Search and Replace" })
 
+-- ── Flash (navigation) ────────────────────────────────────────────────────────
+local flash = require("flash")
+map({ "n", "x", "o" }, "s", function()
+  flash.jump()
+end)
+map({ "n", "x", "o" }, "S", function()
+  flash.treesitter({
+    actions = {
+      ["<C-space>"] = "next",
+      ["<BS>"] = "prev",
+    },
+  })
+end)
+map("o", "r", function()
+  flash.remote()
+end)
+map({ "x", "o" }, "R", function()
+  flash.treesitter_search()
+end)
+
 -- ── Quality of life ────────────────────────────────────────────────────────
 -- Clear search highlight
 map("n", "<leader>nh", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })

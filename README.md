@@ -3,6 +3,7 @@
 Minimal, annotated from-scratch config targeting Neovim 0.12.1+.
 No distros. No magic. Every line is readable.
 
+
 ## Structure
 
 ```
@@ -27,88 +28,15 @@ mv ~/.config/nvim ~/.config/nvim.bak
 # Copy this config
 cp -r . ~/.config/nvim
 
+# Install dependencies
+./install-deps.sh
+
 # Open nvim — it will bootstrap plugins on first launch
 nvim
 
 # Then install plugins
 :Pack install
 ```
-
-## LSP Server Installation
-
-Use `:Mason` to install servers interactively, or run:
-
-```
-:MasonInstall typescript-language-server lua-language-server
-```
-
-For Go and Rust, install from the toolchain:
-
-```bash
-# Go
-go install golang.org/x/tools/gopls@latest
-go install golang.org/x/tools/cmd/goimports@latest
-
-# Rust
-rustup component add rust-analyzer
-
-# Node formatters (for TS/JS)
-npm install -g @fsouza/prettierd
-
-# Python (ruff replaces black + isort + flake8 in one tool)
-pip install ruff
-# Then :MasonInstall pyright
-```
-
-## Language Support
-
-| Language       | Server         | Formatter    | Install via       |
-|----------------|----------------|--------------|-------------------|
-| TypeScript/JS  | ts_ls          | prettierd    | Mason + npm       |
-| Go             | gopls          | gofmt/goimports | go install     |
-| Rust           | rust_analyzer  | rustfmt      | rustup            |
-| Python         | pyright        | ruff_format  | Mason + pip       |
-| Lua            | lua_ls         | stylua       | Mason + cargo     |
-
-## Key Mappings (Space leader)
-
-### Fuzzy Finding (fzf-lua)
-| Key          | Action                  |
-|--------------|-------------------------|
-| `<leader>ff` | Find files              |
-| `<leader>fg` | Live grep               |
-| `<leader>fb` | Open buffers            |
-| `<leader>fr` | Recent files            |
-| `<leader>fs` | Document symbols        |
-| `<leader>fw` | Workspace symbols       |
-
-### LSP (active in LSP buffers)
-| Key          | Action                  |
-|--------------|-------------------------|
-| `gd`         | Go to definition        |
-| `gr`         | Go to references        |
-| `K`          | Hover docs              |
-| `<leader>rn` | Rename symbol           |
-| `<leader>ca` | Code actions            |
-| `]d` / `[d`  | Next / prev diagnostic  |
-| `<leader>xx` | Toggle Trouble list     |
-
-### Git (gitsigns)
-| Key          | Action                  |
-|--------------|-------------------------|
-| `]h` / `[h`  | Next / prev hunk        |
-| `<leader>hs` | Stage hunk              |
-| `<leader>hr` | Reset hunk              |
-| `<leader>hp` | Preview hunk            |
-| `<leader>hb` | Full blame line         |
-
-### Files & Splits
-| Key          | Action                  |
-|--------------|-------------------------|
-| `-`          | Open file explorer      |
-| `<leader>sv` | Vertical split          |
-| `<leader>sh` | Horizontal split        |
-| `<S-h/l>`    | Prev / next buffer      |
 
 ## Checking LSP status
 

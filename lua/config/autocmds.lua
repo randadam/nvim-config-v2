@@ -102,3 +102,22 @@ autocmd("FileType", {
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
+
+-- ── Attach Treesitter ───────────────────────────────────
+-- Quickfix, help, man pages, etc. are easier to close without :q
+autocmd("FileType", {
+  pattern = {
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "go",
+    "rust",
+    "python",
+    "lua",
+    "sql",
+  },
+  callback = function()
+    vim.treesitter.start()
+  end,
+})

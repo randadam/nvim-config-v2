@@ -240,3 +240,24 @@ vim.pack.add({
 require("grug-far").setup({
   headerMaxWidth = 80,
 })
+
+-- ── Notifications ──────────────────────────────────────────────────────
+vim.pack.add({ gh("rcarriga/nvim-notify") })
+require("notify").setup({
+  timeout = 3000,
+  render = "compact",
+})
+vim.notify = require("notify") -- override the built-in
+
+-- ── Navigation ──────────────────────────────────────────────────────
+vim.pack.add({ gh("folke/flash.nvim") })
+require("flash").setup({
+  modes = {
+    search = {
+      enabled = true, -- enhance / with flash labels
+    },
+    char = {
+      enabled = true, -- enhance f/t/F/T with flash labels
+    },
+  },
+})
