@@ -232,3 +232,11 @@ require("nvim-ts-autotag").setup({
     enable_close_on_slash = false,
   },
 })
+
+-- ── Find and Replace ──────────────────────────────────────────────────────
+vim.pack.add({
+  { src = gh("MagicDuck/grug-far.nvim") },
+})
+require("grug-far").setup({
+  headerMaxWidth = 80,
+})

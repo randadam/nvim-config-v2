@@ -96,7 +96,7 @@ autocmd("BufWritePre", {
 augroup("QuickClose", { clear = true })
 autocmd("FileType", {
   group = "QuickClose",
-  pattern = { "qf", "help", "man", "lspinfo", "trouble", "fugitive" },
+  pattern = { "qf", "help", "man", "lspinfo", "trouble", "fugitive", "grug-far" },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })

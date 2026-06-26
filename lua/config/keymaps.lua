@@ -40,9 +40,24 @@ map("n", "<leader>fd", function()
     cwd = vim.fn.input("Directory: ", vim.fn.getcwd() .. "/", "dir"),
   })
 end, { desc = "Grep in directory" })
+map("n", "<leader>:", fzf.commands, { desc = "Find Command" })
+map("n", "<leader>;", fzf.keymaps, { desc = "Find Keymap" })
 
 -- ── File explorer (oil.nvim) ───────────────────────────────────────────────
 map("n", "-", "<cmd>Oil<cr>", { desc = "Open file explorer (vim-vinegar style)" })
+-- create file
+map("n", "%", function()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  if bufname:match("^oil://") then
+    local dir = require("oil").get_current_dir()
+    local filename = vim.fn.input("New file: ", dir)
+    if filename ~= "" then
+      vim.cmd.edit(filename)
+    end
+  else
+    vim.cmd("normal! %")
+  end
+end, { desc = "Jump to matching" })
 
 -- ── Git (gitsigns) ─────────────────────────────────────────────────────────
 -- Hunk navigation and staging — fast inline git workflow
@@ -68,6 +83,19 @@ map("n", "<leader>Df", "<cmd>DBUIFindBuffer<cr>", { desc = "Find DB buffer" })
 -- In a SQL buffer, <leader>S executes the current query (dadbod default is \e)
 -- You can also visually select lines and hit \e to run just that selection.
 
+-- ── Grug Far (Find and Replace) ───────────────────────────────────────────────────────────
+vim.keymap.set({ "n", "v", "x" }, "<leader>sr", function()
+  local grug = require("grug-far")
+  local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+  grug.open({
+    transient = true,
+    prefills = {
+      -- scope the search to the current file's extension by default
+      filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+    },
+  })
+end, { desc = "Search and Replace" })
+
 -- ── Quality of life ────────────────────────────────────────────────────────
 -- Clear search highlight
 map("n", "<leader>nh", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
@@ -90,17 +118,3 @@ end, { desc = "Format buffer" })
 
 -- Quick config reload
 map("n", "<leader>rc", "<cmd>source $MYVIMRC<cr>", { desc = "Reload config" })
-
--- Oil create file shortcut
-map("n", "%", function()
-  local bufname = vim.api.nvim_buf_get_name(0)
-  if bufname:match("^oil://") then
-    local dir = require("oil").get_current_dir()
-    local filename = vim.fn.input("New file: ", dir)
-    if filename ~= "" then
-      vim.cmd.edit(filename)
-    end
-  else
-    vim.cmd("normal! %")
-  end
-end, { desc = "Jump to matching" })
