@@ -116,6 +116,34 @@ map({ "x", "o" }, "R", function()
   flash.treesitter_search()
 end)
 
+-- ── Treesitter  ────────────────────────────────────────────────────────
+map("n", "<leader>cc", "<cmd>TSContext toggle<cr>", { desc = "Toggle Treesitter Context" })
+local txt_objs = require("nvim-treesitter-textobjects.move")
+local map_txt_obj_start = function(key, node_type)
+  map("n", "[" .. key, function()
+    txt_objs.goto_previous_start("@" .. node_type .. ".outer")
+  end, { desc = "Previous " .. node_type .. " start" })
+  map("n", "]" .. key, function()
+    txt_objs.goto_next_start("@" .. node_type .. ".outer")
+  end, { desc = "Next " .. node_type .. " start" })
+end
+local map_txt_obj_end = function(key, node_type)
+  map("n", "[" .. key, function()
+    txt_objs.goto_previous_end("@" .. node_type .. ".outer")
+  end, { desc = "Previous " .. node_type .. " end" })
+  map("n", "]" .. key, function()
+    txt_objs.goto_next_end("@" .. node_type .. ".outer")
+  end, { desc = "Next " .. node_type .. " end" })
+end
+map_txt_obj_start("f", "function")
+map_txt_obj_end("F", "function")
+map_txt_obj_start("a", "parameter")
+map_txt_obj_end("A", "parameter")
+map_txt_obj_start("i", "conditional")
+map_txt_obj_end("I", "conditional")
+map_txt_obj_start("c", "class")
+map_txt_obj_end("C", "class")
+
 -- ── Quality of life ────────────────────────────────────────────────────────
 -- Clear search highlight
 map("n", "<leader>nh", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })

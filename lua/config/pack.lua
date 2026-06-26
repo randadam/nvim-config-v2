@@ -201,25 +201,40 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- ── Syntax Highlighting ──────────────────────────────────────────────────────
+-- ── Treesitter (Syntax Highlighting & Navigation) ──────────────────────────────────────────
 vim.pack.add({
   { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
 })
-
-if pcall(require, "nvim-treesitter") then
-  require("nvim-treesitter").install({
+require("nvim-treesitter").setup({
+  ensure_installed = {
     "typescript",
     "javascript",
     "tsx",
+    "jsx",
     "go",
     "rust",
     "python",
     "sql",
+    "lua",
     "bash",
     "json",
     "yaml",
-  })
-end
+  },
+  highlight = { enable = false },
+  auto_install = true,
+})
+
+vim.pack.add({
+  gh("nvim-treesitter/nvim-treesitter-textobjects"),
+})
+vim.pack.add({
+  gh("nvim-treesitter/nvim-treesitter-context"),
+})
+require("treesitter-context").setup({
+  max_lines = 3, -- max lines the context window can take up
+  trim_scope = "outer", -- which context lines to discard if max_lines exceeded
+  mode = "cursor", -- 'cursor' or 'topline'
+})
 
 -- ── JSX/HTML Auto-tagging ──────────────────────────────────────────────────────
 vim.pack.add({
