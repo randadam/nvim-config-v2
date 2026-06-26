@@ -257,12 +257,12 @@ require("grug-far").setup({
 })
 
 -- ── Notifications ──────────────────────────────────────────────────────
-vim.pack.add({ gh("rcarriga/nvim-notify") })
-require("notify").setup({
-  timeout = 3000,
-  render = "compact",
-})
-vim.notify = require("notify") -- override the built-in
+-- vim.pack.add({ gh("rcarriga/nvim-notify") })
+-- require("notify").setup({
+--   timeout = 3000,
+--   render = "compact",
+-- })
+-- vim.notify = require("notify") -- override the built-in
 
 -- ── Navigation ──────────────────────────────────────────────────────
 vim.pack.add({ gh("folke/flash.nvim") })
